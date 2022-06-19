@@ -20,7 +20,6 @@ import {
   AiFillFire,
   AiFillClockCircle,
   AiOutlineArrowRight,
-  AiFillShopping,
 } from "react-icons/ai";
 import { FaPen, FaCoins, FaHandsHelping } from "react-icons/fa";
 import { isDateInArray } from "../utils";
@@ -146,14 +145,16 @@ const MyProfileTab = ({
               </Text>
             </Flex>
           ) : (
-            <Button
-              w="100%"
-              rightIcon={<AiOutlineArrowRight />}
-              variant="outline"
-              colorScheme="teal"
-            >
-              Start Today's Meditation
-            </Button>
+            <AppLink href="/meditate">
+              <Button
+                w="100%"
+                rightIcon={<AiOutlineArrowRight />}
+                variant="outline"
+                colorScheme="teal"
+              >
+                Start Today's Meditation
+              </Button>
+            </AppLink>
           )}
         </Box>
       </Flex>
@@ -161,17 +162,17 @@ const MyProfileTab = ({
   );
 };
 
-const MyCoinsTab = () => {
+const MyCoinsTab = ({ coins }) => {
   return (
     <Flex justify="center" align="center" direction="column">
       <Icon as={FaCoins} fontSize="9xl" color="yellow.300" />
       <Text my={4} fontWeight="bold" fontSize="2xl">
-        You have 45 Mind Coins
+        You have {coins} Coins
       </Text>
       <Text my={4} alignSelf="start">
         What can you do with these coins ?
       </Text>
-      <Grid w="100%" templateColumns="repeat(2, 1fr)" gap={4}>
+      <Grid w="100%" templateColumns="repeat(1, 1fr)" gap={4}>
         <GridItem w="100%">
           <AppLink href="/support">
             <Flex
@@ -185,22 +186,6 @@ const MyCoinsTab = () => {
             >
               <Icon fontSize="xl" mr={3} as={FaHandsHelping} />
               <Text flex={1}>Support Charitable Instituions</Text>
-              <Icon fontSize="xl" mr={3} as={AiOutlineArrowRight} />
-            </Flex>
-          </AppLink>
-        </GridItem>
-        <GridItem w="100%">
-          <AppLink href="/shop">
-            <Flex
-              p={3}
-              bg="black"
-              rounded="lg"
-              color="white"
-              justify="start"
-              align="center"
-            >
-              <Icon mr={3} fontSize="xl" as={AiFillShopping} />
-              <Text flex={1}>Shop for yourself</Text>
               <Icon fontSize="xl" mr={3} as={AiOutlineArrowRight} />
             </Flex>
           </AppLink>
@@ -220,6 +205,7 @@ const Profile = () => {
     name,
     profilePhoto,
     meditationDates,
+    coins,
     onProfileLoad,
   } = useContext(UserContext);
   const { isAuth } = useContext(AuthContext);
@@ -228,8 +214,8 @@ const Profile = () => {
     if (isAuth) {
       setIsLoading(true);
       fetchMyProfile(uid)
-        .then(({ name, email, dob, profilePhoto, meditationDates }) => {
-          onProfileLoad(name, email, dob, profilePhoto, meditationDates);
+        .then(({ name, email, dob, profilePhoto, meditationDates, coins }) => {
+          onProfileLoad(name, email, dob, profilePhoto, meditationDates, coins);
           setIsLoading(false);
         })
         .catch((err) => {
@@ -250,7 +236,7 @@ const Profile = () => {
         onChangeDate={setCalendarDate}
       />
     );
-  else if (currentTab == "coin") ProfileView = <MyCoinsTab />;
+  else if (currentTab == "coin") ProfileView = <MyCoinsTab coins={coins} />;
 
   if (isLoading)
     ProfileView = (

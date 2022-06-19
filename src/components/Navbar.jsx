@@ -27,18 +27,9 @@ const Navbar = () => {
       align="center"
     >
       <AppLink fontSize="lg" fontWeight="bold" href="/">
-        Peacefullness
+        MindSpace
       </AppLink>
       <Flex>
-        <AppLink
-          href="/shop"
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          mr={7}
-        >
-          Shop
-        </AppLink>
         <AppLink
           href="/support"
           display="flex"
@@ -49,14 +40,16 @@ const Navbar = () => {
           Support
         </AppLink>
         {isAuth ? (
-          <Button
-            variant="solid"
-            fontWeight="normal"
-            rightIcon={<FaUserCircle />}
-            colorScheme="blue"
-          >
-            My Profile
-          </Button>
+          <AppLink href="/profile">
+            <Button
+              variant="solid"
+              fontWeight="normal"
+              rightIcon={<FaUserCircle />}
+              colorScheme="blue"
+            >
+              My Profile
+            </Button>
+          </AppLink>
         ) : (
           <>
             <AppLink href="/signup">

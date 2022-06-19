@@ -40,7 +40,7 @@ const SignIn = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   const nav = useNavigate();
-  const { isAuth, toggleAuth } = useContext(AuthContext);
+  const { isAuth, setAuthState } = useContext(AuthContext);
   const { setUid } = useContext(UserContext);
 
   useEffect(() => {
@@ -52,7 +52,7 @@ const SignIn = () => {
     signInUser(email, password)
       .then((uid) => {
         setIsLoading(false);
-        toggleAuth();
+        setAuthState(true);
         setUid(uid);
       })
       .catch((err) => {
@@ -117,6 +117,12 @@ const SignIn = () => {
           >
             Continue Your Journey
           </Button>
+          <Text mt={3}>
+            Don't have an account, Sign Up{" "}
+            <AppLink color="blue" href="/signin">
+              here
+            </AppLink>
+          </Text>
         </Flex>
         <Image
           src={SignUpImage}

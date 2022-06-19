@@ -1,20 +1,31 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Flex,
   Modal,
   ModalContent,
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { formatTime } from "../utils";
 import ReactConfetti from "react-confetti";
 import AppLink from "../components/AppLink";
+import { updateMeditationRecords } from "../api/user";
+import { UserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const Meditate = () => {
   const initCountdownRef = useRef();
   const mediIntervalRef = useRef();
+  const nav = useNavigate();
 
   const [minutes, setMinutes] = useState(10);
   const [seconds, setSeconds] = useState(0);
@@ -22,6 +33,9 @@ const Meditate = () => {
   const [initialTimeout, setInitialTimeout] = useState(5);
   const [startMeditation, setStartMeditation] = useState(false);
   const [meditationOver, setMeditationOver] = useState(false);
+  const [updatingMediationData, setUpdatingMediationData] = useState(false);
+
+  const { uid, addMeditationRecord } = useContext(UserContext);
 
   useEffect(() => {
     if (!initCountdownRef.current) {
@@ -71,6 +85,20 @@ const Meditate = () => {
     }
   }, [startMeditation, mediIntervalRef, seconds, minutes]);
 
+  const onGoBackToProfileHandler = useCallback(() => {
+    setUpdatingMediationData(true);
+    updateMeditationRecords(uid)
+      .then((data) => {
+        addMeditationRecord(data);
+        setUpdatingMediationData(false);
+        nav("/profile");
+      })
+      .catch((err) => {
+        setUpdatingMediationData(false);
+        console.log("Error updating meditation record", err);
+      });
+  }, [uid]);
+
   return (
     <Flex
       justify="center"
@@ -91,19 +119,29 @@ const Meditate = () => {
         isCentered
       >
         <ModalContent>
-          <Flex py={4} justify="center" align="center" direction="column">
-            <Text fontSize="xl" fontWeight="bold">
-              Congratulations !!
-            </Text>
-            <Text my={3} fontSize="md" color="gray.400">
-              You have completed today's meditation
-            </Text>
-            <Box my={2}>
-              <AppLink href="/profile">
-                <Button variant="outline" colorScheme="green">Go Back To Profile</Button>
-              </AppLink>
-            </Box>
-          </Flex>
+          {updatingMediationData ? (
+            <Flex py={4} justify="center" align="center" direction="column">
+              <CircularProgress isIndeterminate />
+            </Flex>
+          ) : (
+            <Flex py={4} justify="center" align="center" direction="column">
+              <Text fontSize="xl" fontWeight="bold">
+                Congratulations !!
+              </Text>
+              <Text my={3} fontSize="md" color="gray.400">
+                You have completed today's meditation
+              </Text>
+              <Box my={2}>
+                <Button
+                  onClick={onGoBackToProfileHandler}
+                  variant="outline"
+                  colorScheme="green"
+                >
+                  Go Back To Profile
+                </Button>
+              </Box>
+            </Flex>
+          )}
         </ModalContent>
       </Modal>
       {/* Initial Countdown Modal */}

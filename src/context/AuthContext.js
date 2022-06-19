@@ -2,21 +2,23 @@ import { createContext, useState } from "react";
 
 export const AuthContext = createContext({
   isAuth: false,
-  toggleAuth: () => {},
+  setAuthState: () => {},
 });
 
 const AuthContextProvider = ({ children }) => {
   const [isAuth, setIsAuth] = useState(false);
-  console.log("[AuthContext] isAuth", isAuth);
-  const toggleAuth = () => {
-    setIsAuth((prevAuthState) => !prevAuthState);
+
+  const setAuthState = (authState) => {
+    setIsAuth(authState);
   };
+
+  console.log('Auth State -> ', isAuth);
 
   return (
     <AuthContext.Provider
       value={{
         isAuth,
-        toggleAuth,
+        setAuthState,
       }}
     >
       {children}

@@ -9,31 +9,34 @@ import Profile from "./pages/Profile";
 import AuthProtection from "./components/AuthProtection";
 import Meditate from "./pages/Meditate";
 import Support from "./pages/Support";
+import AuthStateMonitor from "./components/AuthStateMonitor";
 
 const App = () => {
   return (
     <ChakraProvider>
-      <BrowserRouter>
-        <AuthContextProvider>
-          <UserContextProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/signup" element={<SignUp />} />
-              <Route path="/signin" element={<SignIn />} />
-              <Route
-                path="/profile"
-                element={
-                  // <AuthProtection>
-                  <Profile />
-                  // </AuthProtection>
-                }
-              />
-              <Route path="/meditate" element={<Meditate />} />
-              <Route path="/support" element={<Support />} />
-            </Routes>
-          </UserContextProvider>
-        </AuthContextProvider>
-      </BrowserRouter>
+      <AuthContextProvider>
+        <UserContextProvider>
+          <AuthStateMonitor>
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/signin" element={<SignIn />} />
+                <Route
+                  path="/profile"
+                  element={
+                    <AuthProtection>
+                      <Profile />
+                    </AuthProtection>
+                  }
+                />
+                <Route path="/meditate" element={<Meditate />} />
+                <Route path="/support" element={<Support />} />
+              </Routes>
+            </BrowserRouter>
+          </AuthStateMonitor>
+        </UserContextProvider>
+      </AuthContextProvider>
     </ChakraProvider>
   );
 };

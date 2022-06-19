@@ -52,6 +52,56 @@ const Home = () => {
           <Image width="40%" src={HomePageArt} alt="Home Page Art" ml={3} />
         </Flex>
       </Box>
+      <Heading my={4} mt={8} w="100%" textAlign="center">
+        Help Yourself. Help Others
+      </Heading>
+      <Flex p={6} justify="space-evenly" align="center">
+        <Flex
+          w="30%"
+          justify="center"
+          align="center"
+          textAlign="center"
+          direction="column"
+          p={10}
+          bg="purple.400"
+        >
+          <Heading fontSize="2xl">Help Yourself</Heading>
+          <Text mt={2} fontSize="sm">
+            Help yoursef by meditation daily and have a calm mind
+          </Text>
+        </Flex>
+        <Flex
+          w="30%"
+          justify="center"
+          align="center"
+          textAlign="center"
+          direction="column"
+          p={10}
+          bg="purple.400"
+        >
+          <Heading fontSize="2xl">Earn Coins</Heading>
+          <Text mt={2} fontSize="sm">
+            Earn Coins by meditating daily
+          </Text>
+        </Flex>
+        <Flex
+          w="30%"
+          justify="center"
+          align="center"
+          textAlign="center"
+          direction="column"
+          p={10}
+          bg="purple.400"
+        >
+          <Heading fontSize="2xl">Help Others</Heading>
+          <Text mt={2} fontSize="sm">
+            Help others by donating your hard earned coins to those in need
+          </Text>
+        </Flex>
+      </Flex>
+      <Flex py={4} bg="black" color="white" justify="center" align="center">
+        <Text>Made with ❤️ by Sayan Das</Text>
+      </Flex>
     </Box>
   );
 };

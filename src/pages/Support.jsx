@@ -1,11 +1,20 @@
-import { Box, Divider, Flex, Heading, Icon, Image } from "@chakra-ui/react";
-import React from "react";
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  Flex,
+  Heading,
+  Icon,
+  Image,
+  Text,
+} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
 import CharityCard from "../components/CharityCard";
 import Navbar from "../components/Navbar";
 import CharityBg from "../assets/charity.jpg";
-import { BsChevronDoubleDown } from "react-icons/bs";
+import { fetchCharities } from "../api/third-party";
 
-const charities = {
+const charityData = {
   projects: {
     hasNext: true,
     nextProjectId: 36061,
@@ -1832,6 +1841,17 @@ const charities = {
 };
 
 const Support = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [charities, setCharities] = useState([]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    fetchCharities().then((data) => {
+      setIsLoading(false);
+      setCharities(data?.projects?.project);
+    });
+  }, []);
+
   return (
     <Box>
       <Navbar />
@@ -1859,7 +1879,7 @@ const Support = () => {
           <Heading textAlign="center" color="white" fontSize="5xl">
             Giving is not just about making a donation.
             <br />
-            It is about making a donation
+            It is about making a difference
           </Heading>
         </Flex>
       </Box>
@@ -1869,25 +1889,38 @@ const Support = () => {
           this battle
         </Heading>
         <Divider borderColor="#1d1d1d" my={4} />
-        {charities.projects.project.map((charity) => (
-          <CharityCard
-            imageLink={charity.imageLink}
-            title={charity.title}
-            summary={charity.summary}
-            contactName={charity.contactName}
-            contactAddress={charity.contactAddress}
-            contactCity={charity.contactCity}
-            contactState={charity.contactState}
-            contactPostal={charity.contactPostal}
-            donationOptions={charity.donationOptions.donationOption}
-            country={charity.country}
-            need={charity.need}
-            longTermImpact={charity.longTermImpact}
-            goal={charity.goal}
-            funding={charity.funding}
-            remaining={charity.remaining}
-          />
-        ))}
+        {isLoading ? (
+          <Flex
+            justify="center"
+            align="center"
+            direction="column"
+            textAlign="center"
+          >
+            <CircularProgress isIndeterminate />
+            <Text mt={4}>Fetching Charities...</Text>
+          </Flex>
+        ) : (
+          charities.map((charity) => (
+            <CharityCard
+              key={charity.id}
+              imageLink={charity.imageLink}
+              title={charity.title}
+              summary={charity.summary}
+              contactName={charity.contactName}
+              contactAddress={charity.contactAddress}
+              contactCity={charity.contactCity}
+              contactState={charity.contactState}
+              contactPostal={charity.contactPostal}
+              donationOptions={charity.donationOptions.donationOption}
+              country={charity.country}
+              need={charity.need}
+              longTermImpact={charity.longTermImpact}
+              goal={charity.goal}
+              funding={charity.funding}
+              remaining={charity.remaining}
+            />
+          ))
+        )}
       </Box>
     </Box>
   );
