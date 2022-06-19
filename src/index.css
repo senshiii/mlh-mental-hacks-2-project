@@ -1,0 +1,50 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', 'Roboto', sans-serif !important;
+}
+
+html, body{
+  width: 100vw;
+  min-height: 100vh;
+  height: auto;
+  overflow-x: hidden;
+}
+
+.calendar{
+  width: 100% !important;
+}
+
+.meditation_checked_tile > abbr{
+  background: rgb(15, 177, 15) !important;
+  padding: 8px;
+  clip-path: circle();
+  margin-left: 4px;
+}
+
+.meditation_missed_tile{
+  background: red !important;
+}
+
+.meditation_breathe_bubbles{
+  animation-name: breathe;
+  animation-duration: 10s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes breathe {
+  0%{
+    transform: scale(1)
+  }
+  50%{
+    transform: scale(1.25)
+  }
+  100%{
+    transform: scale(1)
+  }
+}
+
