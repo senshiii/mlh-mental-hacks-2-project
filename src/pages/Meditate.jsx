@@ -21,6 +21,7 @@ import AppLink from "../components/AppLink";
 import { updateMeditationRecords } from "../api/user";
 import { UserContext } from "../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import MeditationMusic from '../assets/meditation.mp3'
 
 const Meditate = () => {
   const initCountdownRef = useRef();
@@ -34,6 +35,7 @@ const Meditate = () => {
   const [startMeditation, setStartMeditation] = useState(false);
   const [meditationOver, setMeditationOver] = useState(false);
   const [updatingMediationData, setUpdatingMediationData] = useState(false);
+  const [audio, setAudio] = useState(new Audio(MeditationMusic));
 
   const { uid, addMeditationRecord } = useContext(UserContext);
 
@@ -74,12 +76,14 @@ const Meditate = () => {
           meditationTick.bind({ seconds, minutes }),
           1000
         );
+        audio.play();
 
         // Set 1 min timeout
         setTimeout(() => {
           // console.log("Meditation Over");
           clearInterval(mediIntervalRef.current);
           setMeditationOver(true);
+          audio.pause();
         }, 10000);
       }
     }
