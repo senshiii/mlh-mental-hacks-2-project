@@ -12,7 +12,7 @@ const AuthContextProvider = ({ children }) => {
     setIsAuth(authState);
   };
 
-  console.log('Auth State -> ', isAuth);
+  // console.log('Auth State -> ', isAuth);
 
   return (
     <AuthContext.Provider

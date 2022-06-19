@@ -12,7 +12,7 @@ const AuthStateMonitor = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("Auth State Changed. User ID -> ", user.uid);
+        // console.log("Auth State Changed. User ID -> ", user.uid);
         setUid(user.uid);
         setAuthState(true);
       }

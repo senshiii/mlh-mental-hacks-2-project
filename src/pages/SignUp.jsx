@@ -61,7 +61,7 @@ const SignUp = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-        console.log("Error creating user", err);
+        // console.log("Error creating user", err);
       });
   }, [email, password, dob, name]);
 

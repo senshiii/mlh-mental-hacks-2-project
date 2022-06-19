@@ -219,7 +219,7 @@ const Profile = () => {
           setIsLoading(false);
         })
         .catch((err) => {
-          console.log("[Profile] profile load error", err);
+          // console.log("[Profile] profile load error", err);
           setIsLoading(false);
         });
     }

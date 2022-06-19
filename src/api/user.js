@@ -32,7 +32,7 @@ export async function signUpUser(name, email, dob, password) {
     );
     return user.uid;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     throw new Error(err.message);
   }
 }
@@ -60,26 +60,26 @@ export async function fetchMyProfile(uid) {
 
 export async function updateMeditationRecords(uid) {
   try {
-    console.log("UID", uid);
+    // console.log("UID", uid);
     const userRef = doc(db, "user", uid);
-    console.log("userRef", userRef);
+    // console.log("userRef", userRef);
     const docSnap = await getDoc(userRef);
-    console.log("docnSnap", docSnap);
+    // console.log("docnSnap", docSnap);
     const { coins } = docSnap.data();
-    console.log("user coins", coins);
+    // console.log("user coins", coins);
     const today = new Date();
-    console.log("today", today);
+    // console.log("today", today);
     const data = {
       date: today.getDate(),
       month: today.getMonth(),
       year: today.getFullYear(),
     };
-    console.log("data", data);
+    // console.log("data", data);
     await updateDoc(userRef, {
       meditationDates: arrayUnion(data),
       coins: coins + 1,
     });
-    console.log("updated data");
+    // console.log("updated data");
     return data;
   } catch (err) {
     throw new Error("Something went wrong", err.message);

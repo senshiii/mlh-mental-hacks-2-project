@@ -57,7 +57,7 @@ const SignIn = () => {
       })
       .catch((err) => {
         setIsLoading(false);
-        console.log("Error signing in user", err);
+        // console.log("Error signing in user", err);
       });
   }, [email, password]);
 

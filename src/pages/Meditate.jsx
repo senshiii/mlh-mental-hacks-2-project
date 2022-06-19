@@ -39,15 +39,15 @@ const Meditate = () => {
 
   useEffect(() => {
     if (!initCountdownRef.current) {
-      console.log("Setting up 5 sec countdown interval");
+      // console.log("Setting up 5 sec countdown interval");
       const interval = setInterval(function () {
         setInitialTimeout((sec) => sec - 1);
       }, 1000);
       initCountdownRef.current = interval;
 
-      console.log("Setting up 5 sec timeout");
+      // console.log("Setting up 5 sec timeout");
       setTimeout(() => {
-        console.log("5 seconds up");
+        // console.log("5 seconds up");
         clearInterval(initCountdownRef.current);
         setShowInitialDialog(false);
         setStartMeditation(true);
@@ -56,7 +56,7 @@ const Meditate = () => {
   }, []);
 
   const meditationTick = useCallback(() => {
-    console.log("Minute", minutes, "Seconds", seconds);
+    // console.log("Minute", minutes, "Seconds", seconds);
     if (seconds == 0) {
       setSeconds((_) => 59);
       setMinutes((min) => min - 1);
@@ -68,7 +68,7 @@ const Meditate = () => {
   useEffect(() => {
     if (startMeditation) {
       if (!mediIntervalRef.current) {
-        console.log("Setting up 1 minute timer and 1 sec interval");
+        // console.log("Setting up 1 minute timer and 1 sec interval");
         // Set interval for time rendering
         mediIntervalRef.current = setInterval(
           meditationTick.bind({ seconds, minutes }),
@@ -77,7 +77,7 @@ const Meditate = () => {
 
         // Set 1 min timeout
         setTimeout(() => {
-          console.log("Meditation Over");
+          // console.log("Meditation Over");
           clearInterval(mediIntervalRef.current);
           setMeditationOver(true);
         }, 10000);
@@ -95,7 +95,7 @@ const Meditate = () => {
       })
       .catch((err) => {
         setUpdatingMediationData(false);
-        console.log("Error updating meditation record", err);
+        // console.log("Error updating meditation record", err);
       });
   }, [uid]);
 
